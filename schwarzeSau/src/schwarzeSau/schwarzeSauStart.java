@@ -64,15 +64,14 @@ public class schwarzeSauStart extends Application {
 	VBox vbox1 = new VBox();
 	private Label label1 = new Label();
 	private ArrayList<Person> lList = new ArrayList<Person>();
-	private ArrayList<Hyperlink> vList = new ArrayList<Hyperlink>();
-	private Label jobStatus = new Label();
 	Text spieler1Text = new Text("0");
 	Text spieler2Text = new Text("0");
 	Text spieler3Text = new Text("0");
 	Text spieler4Text = new Text("0");
 	Text spieler5Text = new Text("0");
 	Text spieler6Text = new Text("0");
-	private int position = 0;
+	Text spieler7Text = new Text("0");
+	private int counter = 0;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -82,7 +81,7 @@ public class schwarzeSauStart extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		window = primaryStage;
 		List<Integer> choices = new ArrayList<>();
-		for (int i = 3; i < 7; i++) {
+		for (int i = 3; i < 8; i++) {
 			choices.add(i);
 		}
 
@@ -112,13 +111,17 @@ public class schwarzeSauStart extends Application {
 		name5.setPromptText("Name hier eintragen");
 		final TextField name6 = new TextField();
 		name6.setPromptText("Name hier eintragen");
+		final TextField name7 = new TextField();
+		name7.setPromptText("Name hier eintragen");
+		final TextField maxPoints = new TextField();
+		maxPoints.setPromptText("Bis wieviel mÃ¶chten Sie spielen?");
 		// Create the custom dialog.
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Namen");
 		dialog.setHeaderText("Bitte Namen hier eintragen:");
 
 		// Set the button types.
-		ButtonType loginButtonType = new ButtonType("Hinzufügen", ButtonData.OK_DONE);
+		ButtonType loginButtonType = new ButtonType("Hinzufï¿½gen", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
 		// Create the username and password labels and fields.
@@ -137,6 +140,9 @@ public class schwarzeSauStart extends Application {
 
 			grid.add(new Label("Name:"), 0, 2);
 			grid.add(name3, 1, 2);
+			
+			grid.add(new Label("Punkte: "), 0, 3);
+			grid.add(maxPoints,1,3);
 			break;
 		case 4:
 			grid.add(new Label("Name:"), 0, 0);
@@ -150,6 +156,9 @@ public class schwarzeSauStart extends Application {
 
 			grid.add(new Label("Name:"), 0, 3);
 			grid.add(name4, 1, 3);
+			
+			grid.add(new Label("Punkte: "), 0, 4);
+			grid.add(maxPoints,1,4);
 			break;
 		case 5:
 			grid.add(new Label("Name:"), 0, 0);
@@ -166,6 +175,9 @@ public class schwarzeSauStart extends Application {
 
 			grid.add(new Label("Name:"), 0, 4);
 			grid.add(name5, 1, 4);
+			
+			grid.add(new Label("Punkte: "), 0, 5);
+			grid.add(maxPoints,1,5);
 			break;
 		case 6:
 			grid.add(new Label("Name:"), 0, 0);
@@ -185,6 +197,35 @@ public class schwarzeSauStart extends Application {
 
 			grid.add(new Label("Name:"), 0, 5);
 			grid.add(name6, 1, 5);
+			
+			grid.add(new Label("Punkte: "), 1, 0);
+			grid.add(maxPoints,1,6);
+			break;
+			
+		case 7: 
+			grid.add(new Label("Name:"), 0, 0);
+			grid.add(name1, 1, 0);
+
+			grid.add(new Label("Name:"), 0, 1);
+			grid.add(name2, 1, 1);
+
+			grid.add(new Label("Name:"), 0, 2);
+			grid.add(name3, 1, 2);
+
+			grid.add(new Label("Name:"), 0, 3);
+			grid.add(name4, 1, 3);
+
+			grid.add(new Label("Name:"), 0, 4);
+			grid.add(name5, 1, 4);
+
+			grid.add(new Label("Name:"), 0, 5);
+			grid.add(name6, 1, 5);
+			
+			grid.add(new Label("Name:"), 0, 6);
+			grid.add(name7, 1, 6);
+			
+			grid.add(new Label("Punkte: "), 0, 7);
+			grid.add(maxPoints,1,7);
 			break;
 		default:
 			break;
@@ -196,34 +237,33 @@ public class schwarzeSauStart extends Application {
 		Optional<ButtonType> result = dialog.showAndWait();
 		if (result.get() == loginButtonType){
 			starteMainWindow(name1.getText(), name2.getText(), name3.getText(), name4.getText(), name5.getText(),
-					name6.getText(), window, number);
+					name6.getText(), name7.getText(), maxPoints.getText(), window, number);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void starteMainWindow(String text, String text2, String text3, String text4, String text5, String text6,
-			Stage stage, int number) {
+			String text7, String maxPoints, Stage stage, int number) {
 
 		Scene scene = new Scene(new Group());
 		stage.setTitle("Schwarze Sau");
 		switch (number) {
 		case 3:
 			stage.setWidth(770);
-			stage.setHeight(550);
 			break;
 		case 4:
 			stage.setWidth(870);
-			stage.setHeight(550);
 			break;
 		case 5:
 			stage.setWidth(970);
-			stage.setHeight(550);
 			break;
 		case 6:
 			stage.setWidth(1070);
-			stage.setHeight(550);
 			break;
+		case 7:
+			stage.setWidth(1170);
 		}
+		stage.setHeight(550);
 
 		final Label label = new Label("Schwarze Sau");
 		label.setFont(new Font("Arial", 20));
@@ -242,6 +282,8 @@ public class schwarzeSauStart extends Application {
 				checkRestwert(((Person) t.getTableView().getItems().get(t.getTablePosition().getRow())));
 			}
 		});
+		firstNameCol.getStyleClass().add("active");
+		counter++;
 
 		TableColumn lastNameCol = new TableColumn(text2);
 		lastNameCol.setPrefWidth(100);
@@ -312,6 +354,19 @@ public class schwarzeSauStart extends Application {
 				checkRestwert(((Person) t.getTableView().getItems().get(t.getTablePosition().getRow())));
 			}
 		});
+		
+		TableColumn seventhPlayer = new TableColumn(text7);
+		seventhPlayer.setPrefWidth(100);
+		seventhPlayer.setCellValueFactory(new PropertyValueFactory<Person, String>("punkte6"));
+		seventhPlayer.setCellFactory(TextFieldTableCell.forTableColumn());
+		seventhPlayer.setOnEditCommit(new EventHandler<CellEditEvent<Person, String>>() {
+			@Override
+			public void handle(CellEditEvent<Person, String> t) {
+				((Person) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPunkte6(t.getNewValue());
+				getSummeDerRunden();
+				checkRestwert(((Person) t.getTableView().getItems().get(t.getTablePosition().getRow())));
+			}
+		});
 
 		table.setItems(data);
 
@@ -333,13 +388,15 @@ public class schwarzeSauStart extends Application {
 		final TextField addPoints6 = new TextField();
 		addPoints6.setMaxWidth(sixthPlayer.getPrefWidth());
 		addPoints6.setPromptText("Punkte " + text6);
+		final TextField addPoints7 = new TextField();
+		addPoints7.setMaxWidth(sixthPlayer.getPrefWidth());
+		addPoints7.setPromptText("Punkte " + text7);
 		final TextField quotes = new TextField();
 		quotes.setPrefWidth(200);
-		quotes.setPromptText("Dumme Sprüche hier reinschreiben!");
+		quotes.setPromptText("Spruch hier eintippen");
 
 		final Button addButton = new Button("Add");
 		addButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				Person person = null;
 				switch (number) {
@@ -358,9 +415,14 @@ public class schwarzeSauStart extends Application {
 					person = new Person(addPoints1.getText(), addPoints2.getText(), addPoints3.getText(),
 							addPoints4.getText(), addPoints5.getText(), addPoints6.getText(), "0");
 					break;
+				case 7:
+					person = new Person(addPoints1.getText(), addPoints2.getText(), addPoints3.getText(),
+							addPoints4.getText(), addPoints5.getText(), addPoints6.getText(), addPoints7.getText(), "0");
+					break;
 				default:
 					System.out.println("FEHLER!! Keine number!");
 				}
+				changeGeber();
 				checkRestwert(person);
 				data.add(person);
 				lList.add(person);
@@ -372,13 +434,81 @@ public class schwarzeSauStart extends Application {
 				addPoints4.clear();
 				addPoints5.clear();
 				addPoints6.clear();
+				addPoints7.clear();
+			}
+
+			private void changeGeber() {
+				if (counter == number) {
+					counter = 0;
+				}
+				switch(counter) {
+				case 0: firstNameCol.getStyleClass().add("active");
+				lastNameCol.getStyleClass().remove("active");
+				emailCol.getStyleClass().remove("active");
+				fourthPlayer.getStyleClass().remove("active");
+				fifthPlayer.getStyleClass().remove("active");
+				sixthPlayer.getStyleClass().remove("active");
+				seventhPlayer.getStyleClass().remove("active");
+					break;
+				case 1: firstNameCol.getStyleClass().remove("active");
+				lastNameCol.getStyleClass().add("active");
+				emailCol.getStyleClass().remove("active");
+				fourthPlayer.getStyleClass().remove("active");
+				fifthPlayer.getStyleClass().remove("active");
+				sixthPlayer.getStyleClass().remove("active");
+				seventhPlayer.getStyleClass().remove("active");
+					break;
+				case 2: firstNameCol.getStyleClass().remove("active");
+				lastNameCol.getStyleClass().remove("active");
+				emailCol.getStyleClass().add("active");
+				fourthPlayer.getStyleClass().remove("active");
+				fifthPlayer.getStyleClass().remove("active");
+				sixthPlayer.getStyleClass().remove("active");
+				seventhPlayer.getStyleClass().remove("active");
+					break;
+				case 3: firstNameCol.getStyleClass().remove("active");
+				lastNameCol.getStyleClass().remove("active");
+				emailCol.getStyleClass().remove("active");
+				fourthPlayer.getStyleClass().add("active");
+				fifthPlayer.getStyleClass().remove("active");
+				sixthPlayer.getStyleClass().remove("active");
+				seventhPlayer.getStyleClass().remove("active");
+					break;
+				case 4: firstNameCol.getStyleClass().remove("active");
+				lastNameCol.getStyleClass().remove("active");
+				emailCol.getStyleClass().remove("active");
+				fourthPlayer.getStyleClass().remove("active");
+				fifthPlayer.getStyleClass().add("active");
+				sixthPlayer.getStyleClass().remove("active");
+				seventhPlayer.getStyleClass().remove("active");
+					break;
+				case 5: firstNameCol.getStyleClass().remove("active");
+				lastNameCol.getStyleClass().remove("active");
+				emailCol.getStyleClass().remove("active");
+				fourthPlayer.getStyleClass().remove("active");
+				fifthPlayer.getStyleClass().remove("active");
+				sixthPlayer.getStyleClass().add("active");
+				seventhPlayer.getStyleClass().remove("active");
+					break;
+				case 6: firstNameCol.getStyleClass().remove("active");
+				lastNameCol.getStyleClass().remove("active");
+				emailCol.getStyleClass().remove("active");
+				fourthPlayer.getStyleClass().remove("active");
+				fifthPlayer.getStyleClass().remove("active");
+				sixthPlayer.getStyleClass().remove("active");
+				seventhPlayer.getStyleClass().add("active");
+					break;
+				}
+				counter++;
+				
+				// TODO Auto-generated method stub
+				
 			}
 
 		});
 
 		final Button addButton2 = new Button("Add");
 		addButton2.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				String newStr = label1.getText() + "\n" + quotes.getText();
 			label1.setText(newStr);
@@ -388,7 +518,6 @@ public class schwarzeSauStart extends Application {
 		
 		final Button clearButton = new Button("Clear");
 		clearButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				label1.setText("");
 			}
@@ -406,6 +535,8 @@ public class schwarzeSauStart extends Application {
 		spieler5Text.setFill(javafx.scene.paint.Color.rgb(101, 177, 252));
 		spieler6Text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		spieler6Text.setFill(javafx.scene.paint.Color.rgb(101, 177, 252));
+		spieler7Text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+		spieler7Text.setFill(javafx.scene.paint.Color.rgb(101, 177, 252));
 		
 		label1.getStyleClass().add("label1");
 		label1.setWrapText(true);
@@ -500,6 +631,34 @@ public class schwarzeSauStart extends Application {
 			clearButton.setLayoutY(445);
 			hb.getChildren().addAll(addPoints1, addPoints2, addPoints3, addPoints4, addPoints5, addPoints6, addButton);
 			break;
+		case 7:
+			table.getColumns().addAll(firstNameCol, lastNameCol, emailCol, fourthPlayer, fifthPlayer, sixthPlayer, seventhPlayer,
+					restwert);
+			spieler1Text.setLayoutX(40);
+			spieler1Text.setLayoutY(500);
+			spieler2Text.setLayoutX(140);
+			spieler2Text.setLayoutY(500);
+			spieler3Text.setLayoutX(240);
+			spieler3Text.setLayoutY(500);
+			spieler4Text.setLayoutX(340);
+			spieler4Text.setLayoutY(500);
+			spieler5Text.setLayoutX(440);
+			spieler5Text.setLayoutY(500);
+			spieler6Text.setLayoutX(540);
+			spieler6Text.setLayoutY(500);
+			spieler7Text.setLayoutX(640);
+			spieler7Text.setLayoutY(500);
+			label1.setPrefSize(290, 395);
+			label1.setLayoutX(850);
+			label1.setLayoutY(40);
+			quotes.setLayoutX(850);
+			quotes.setLayoutY(445);
+			addButton2.setLayoutX(1050);
+			addButton2.setLayoutY(445);
+			clearButton.setLayoutX(1090);
+			clearButton.setLayoutY(445);
+			hb.getChildren().addAll(addPoints1, addPoints2, addPoints3, addPoints4, addPoints5, addPoints6, addPoints7, addButton);
+			break;
 		default:
 			System.out.println("FEHLER!! Keine number!");
 		}
@@ -515,7 +674,7 @@ public class schwarzeSauStart extends Application {
 		vbox.getChildren().addAll(label, hb1, hb, label1);
 
 		Button printSceneButton = new Button("Save as PNG");
-		printSceneButton.setLayoutX(150);
+		printSceneButton.setLayoutX(200);
 		printSceneButton.setLayoutY(10);
 		
 		printSceneButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -548,6 +707,10 @@ public class schwarzeSauStart extends Application {
 			((Group) scene.getRoot()).getChildren().addAll(vbox, spieler1Text, spieler2Text, spieler3Text, spieler4Text,
 					spieler5Text, spieler6Text, quotes, addButton2, vbox1, printSceneButton,label1,clearButton);
 			break;
+		case 7:
+			((Group) scene.getRoot()).getChildren().addAll(vbox, spieler1Text, spieler2Text, spieler3Text, spieler4Text,
+					spieler5Text, spieler6Text,spieler7Text, quotes, addButton2, vbox1, printSceneButton,label1,clearButton);
+			break;
 		}
 		int fifty = 50;
 		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
@@ -558,14 +721,6 @@ public class schwarzeSauStart extends Application {
 		
 	}
 
-	private void erstelleTextField(Scene scene) {
-		Text temp = new Text();
-		temp.setLayoutX(450);
-		temp.setLayoutY(position);
-		((Group) scene.getRoot()).getChildren().addAll(temp);
-		position += 50;
-	}
-
 	private void getSummeDerRunden() {
 		int summe1 = 0;
 		int summe2 = 0;
@@ -573,6 +728,7 @@ public class schwarzeSauStart extends Application {
 		int summe4 = 0;
 		int summe5 = 0;
 		int summe6 = 0;
+		int summe7 = 0;
 
 		for (Person person : lList) {
 			if (person.getFirstName().trim().isEmpty()) {
@@ -602,45 +758,60 @@ public class schwarzeSauStart extends Application {
 			}
 			if (person.getPunkte5().trim().isEmpty()) {
 				summe6 += 0;
-			} else {
+			}else {
 				summe6 += Integer.parseInt(person.getPunkte5());
 			}
+			if (person.getPunkte6().trim().isEmpty()){
+				summe7 += 0;
+			}else{
+				summe7 += Integer.parseInt(person.getPunkte6());
+			}
+		
 		}
 		if(summe1 >= 900) {
 			spieler1Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		if(summe2 >= 900) {
+		else if(summe2 >= 900) {
 			spieler2Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		if(summe3 >= 900) {
+		else if(summe3 >= 900) {
 			spieler3Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		if(summe4 >= 900) {
+		else if(summe4 >= 900) {
 			spieler4Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		if(summe5 >= 900) {
+		else if(summe5 >= 900) {
 			spieler5Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		if(summe6 >= 900) {
+		else if(summe6 >= 900) {
 			spieler6Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		if(summe1 >= 1000) {
+		else if(summe7 >= 900) {
+			spieler7Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
+		}
+		else if(summe1 >= 1000) {
 			spieler1Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		if(summe2 >= 1000) {
+		else if(summe2 >= 1000) {
 			spieler2Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		if(summe3 >= 1000) {
+		else if(summe3 >= 1000) {
 			spieler3Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		if(summe4 >= 1000) {
+		else if(summe4 >= 1000) {
 			spieler4Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		if(summe5 >= 1000) {
+		else if(summe5 >= 1000) {
 			spieler5Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		if(summe6 >= 1000) {
+		else if(summe6 >= 1000) {
 			spieler6Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
+		}
+		else if(summe7 >= 1000) {
+			spieler7Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
+		}
+		else {
+			
 		}
 		spieler1Text.setText(Integer.toString(summe1));
 		spieler2Text.setText(Integer.toString(summe2));
@@ -648,6 +819,7 @@ public class schwarzeSauStart extends Application {
 		spieler4Text.setText(Integer.toString(summe4));
 		spieler5Text.setText(Integer.toString(summe5));
 		spieler6Text.setText(Integer.toString(summe6));
+		spieler7Text.setText(Integer.toString(summe7));
 
 	}
 
@@ -658,6 +830,7 @@ public class schwarzeSauStart extends Application {
 		int punkte3 = 0;
 		int punkte4 = 0;
 		int punkte5 = 0;
+		int punkte6 = 0;
 		if (person.getEmail().trim().isEmpty() || person.getEmail() == null) {
 			punkte0 = 0;
 		} else {
@@ -688,8 +861,13 @@ public class schwarzeSauStart extends Application {
 		} else {
 			punkte5 = Integer.parseInt(person.getPunkte5());
 		}
+		if (person.getPunkte6().trim().isEmpty() || person.getPunkte6() == null) {
+			punkte5 = 0;
+		} else {
+			punkte5 = Integer.parseInt(person.getPunkte6());
+		}
 
-		int summeInt = - punkte0 - punkte1 - punkte2 - punkte3 - punkte4 - punkte5 + 220;
+		int summeInt = - punkte0 - punkte1 - punkte2 - punkte3 - punkte4 - punkte5 - punkte6 + 220;
 		String summe = String.valueOf(summeInt);
 		person.setSumme(summe);
 	}
@@ -702,8 +880,22 @@ public class schwarzeSauStart extends Application {
 		private final SimpleStringProperty punkte3;
 		private final SimpleStringProperty punkte4;
 		private final SimpleStringProperty punkte5;
+		private final SimpleStringProperty punkte6;
+
 		private final SimpleStringProperty summe;
 
+		private Person(String fName, String lName, String email, String punkte3, String punkte4, String punkte5, String punkte6,
+				String summe1) {
+			this.firstName = new SimpleStringProperty(fName);
+			this.lastName = new SimpleStringProperty(lName);
+			this.email = new SimpleStringProperty(email);
+			this.punkte3 = new SimpleStringProperty(punkte3);
+			this.punkte4 = new SimpleStringProperty(punkte4);
+			this.punkte5 = new SimpleStringProperty(punkte5);
+			this.punkte6 = new SimpleStringProperty(punkte6);
+			this.summe = new SimpleStringProperty(summe1);
+		}
+		
 		private Person(String fName, String lName, String email, String punkte3, String punkte4, String punkte5,
 				String summe1) {
 			this.firstName = new SimpleStringProperty(fName);
@@ -712,6 +904,7 @@ public class schwarzeSauStart extends Application {
 			this.punkte3 = new SimpleStringProperty(punkte3);
 			this.punkte4 = new SimpleStringProperty(punkte4);
 			this.punkte5 = new SimpleStringProperty(punkte5);
+			this.punkte6 = new SimpleStringProperty("");
 			this.summe = new SimpleStringProperty(summe1);
 		}
 
@@ -722,6 +915,7 @@ public class schwarzeSauStart extends Application {
 			this.punkte3 = new SimpleStringProperty("");
 			this.punkte4 = new SimpleStringProperty("");
 			this.punkte5 = new SimpleStringProperty("");
+			this.punkte6 = new SimpleStringProperty("");
 			this.summe = new SimpleStringProperty(summe1);
 		}
 
@@ -732,6 +926,7 @@ public class schwarzeSauStart extends Application {
 			this.punkte3 = new SimpleStringProperty(text4);
 			this.punkte4 = new SimpleStringProperty("");
 			this.punkte5 = new SimpleStringProperty("");
+			this.punkte6 = new SimpleStringProperty("");
 			this.summe = new SimpleStringProperty(string);
 		}
 
@@ -742,6 +937,7 @@ public class schwarzeSauStart extends Application {
 			this.punkte3 = new SimpleStringProperty(text4);
 			this.punkte4 = new SimpleStringProperty(text5);
 			this.punkte5 = new SimpleStringProperty("");
+			this.punkte6 = new SimpleStringProperty("");
 			this.summe = new SimpleStringProperty(string);
 		}
 
@@ -775,6 +971,14 @@ public class schwarzeSauStart extends Application {
 
 		public void setPunkte5(String fName) {
 			punkte5.set(fName);
+		}
+		
+		public String getPunkte6() {
+			return punkte6.get();
+		}
+
+		public void setPunkte6(String fName) {
+			punkte6.set(fName);
 		}
 
 		public String getLastName() {
