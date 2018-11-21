@@ -41,6 +41,10 @@
 -fx-table-header-border-color:derive(-fx-base,+20%);
 }
 
+.table-view .column-header.active {
+    -fx-base: #65B1FC;
+}
+
 .table-view{
 -fx-border-color: #65B1FC;}
 
