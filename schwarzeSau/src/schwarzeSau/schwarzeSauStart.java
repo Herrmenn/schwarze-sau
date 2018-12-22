@@ -72,6 +72,7 @@ public class schwarzeSauStart extends Application {
 	Text spieler6Text = new Text("0");
 	Text spieler7Text = new Text("0");
 	private int counter = 0;
+	private double maxPunkte  = 0;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -114,14 +115,14 @@ public class schwarzeSauStart extends Application {
 		final TextField name7 = new TextField();
 		name7.setPromptText("Name hier eintragen");
 		final TextField maxPoints = new TextField();
-		maxPoints.setPromptText("Bis wieviel mÃ¶chten Sie spielen?");
+		maxPoints.setPromptText("Bis wieviel möchten Sie spielen?");
 		// Create the custom dialog.
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Namen");
 		dialog.setHeaderText("Bitte Namen hier eintragen:");
 
 		// Set the button types.
-		ButtonType loginButtonType = new ButtonType("Hinzufï¿½gen", ButtonData.OK_DONE);
+		ButtonType loginButtonType = new ButtonType("Hinzufügen", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
 		// Create the username and password labels and fields.
@@ -237,13 +238,14 @@ public class schwarzeSauStart extends Application {
 		Optional<ButtonType> result = dialog.showAndWait();
 		if (result.get() == loginButtonType){
 			starteMainWindow(name1.getText(), name2.getText(), name3.getText(), name4.getText(), name5.getText(),
-					name6.getText(), name7.getText(), maxPoints.getText(), window, number);
+					name6.getText(), name7.getText(), window, number);
+			this.maxPunkte = Integer.parseInt(maxPoints.getText());
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void starteMainWindow(String text, String text2, String text3, String text4, String text5, String text6,
-			String text7, String maxPoints, Stage stage, int number) {
+			String text7, Stage stage, int number) {
 
 		Scene scene = new Scene(new Group());
 		stage.setTitle("Schwarze Sau");
@@ -422,6 +424,8 @@ public class schwarzeSauStart extends Application {
 				default:
 					System.out.println("FEHLER!! Keine number!");
 				}
+				
+				
 				changeGeber();
 				checkRestwert(person);
 				data.add(person);
@@ -720,6 +724,25 @@ public class schwarzeSauStart extends Application {
 		stage.getIcons().add(new Image("http://www.edition-elf.de/forum-pics/pik-dame1.jpg"));
 		
 	}
+	
+//TODO	private void durschmarsch() {
+//		List<String> choices = new ArrayList<>();
+//		for (int i = 3; i < 8; i++) {
+//			choices.add();
+//		}
+//
+//		ChoiceDialog<Integer> dialog = new ChoiceDialog<>(3, choices);
+//		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+//		stage.getIcons().add(new Image("http://www.edition-elf.de/forum-pics/pik-dame1.jpg"));
+//		dialog.setTitle("Wahl");
+//		dialog.setHeaderText("Wieviele Spieler spielen mit ?");
+//		dialog.setContentText("Anzahl der Spieler:");
+//		dialog.getDialogPane().getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+//		Optional<Integer> result = dialog.showAndWait();
+//
+//		// The Java 8 way to get the response value (with lambda expression).
+//		result.ifPresent(number -> starteNamenFenster(number));
+//	}
 
 	private void getSummeDerRunden() {
 		int summe1 = 0;
@@ -768,46 +791,46 @@ public class schwarzeSauStart extends Application {
 			}
 		
 		}
-		if(summe1 >= 900) {
+		if(summe1 >= this.maxPunkte-103) {
 			spieler1Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		else if(summe2 >= 900) {
+	    if(summe2 >= this.maxPunkte-103) {
 			spieler2Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		else if(summe3 >= 900) {
+	    if(summe3 >= this.maxPunkte-103) {
 			spieler3Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		else if(summe4 >= 900) {
+	    if(summe4 >= this.maxPunkte-103) {
 			spieler4Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		else if(summe5 >= 900) {
+	    if(summe5 >= this.maxPunkte-103) {
 			spieler5Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		else if(summe6 >= 900) {
+	    if(summe6 >= this.maxPunkte-103) {
 			spieler6Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		else if(summe7 >= 900) {
+	    if(summe7 >= this.maxPunkte-103) {
 			spieler7Text.setFill(javafx.scene.paint.Color.rgb(234, 234, 70));
 		}
-		else if(summe1 >= 1000) {
+	    if(summe1 >= this.maxPunkte) {
 			spieler1Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		else if(summe2 >= 1000) {
+	    if(summe2 >= this.maxPunkte) {
 			spieler2Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		else if(summe3 >= 1000) {
+	    if(summe3 >= this.maxPunkte) {
 			spieler3Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		else if(summe4 >= 1000) {
+	    if(summe4 >= this.maxPunkte) {
 			spieler4Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		else if(summe5 >= 1000) {
+	    if(summe5 >= this.maxPunkte) {
 			spieler5Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		else if(summe6 >= 1000) {
+	    if(summe6 >= this.maxPunkte) {
 			spieler6Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
-		else if(summe7 >= 1000) {
+	    if(summe7 >= this.maxPunkte) {
 			spieler7Text.setFill(javafx.scene.paint.Color.rgb(214, 54, 42));
 		}
 		else {
